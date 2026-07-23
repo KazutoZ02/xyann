@@ -91,7 +91,7 @@ async def on_message(message: discord.Message):
 
     # Check if message is a Direct Message (DM)
     is_dm = isinstance(message.channel, discord.DMChannel)
-    is_mentioned = bot.user in message.mentions
+    is_mentioned = bot.user.id in [m.id for m in message.mentions]
     
     # Process prefix commands first if any
     await bot.process_commands(message)
@@ -103,8 +103,11 @@ async def on_message(message: discord.Message):
         # Remove the bot mention string from the message content
         user_text = message.content.replace(f'<@{bot.user.id}>', '').replace(f'<@!{bot.user.id}>', '').strip()
 
+        # If user just pinged the bot with no text, send a default greeting
         if not user_text:
-            return
+            if is_dm:
+                return
+            user_text = "Hello!"
 
         # Check if user sent an imagine command in DM
         if user_text.lower().startswith("imagine ") or user_text.lower().startswith("draw "):
