@@ -50,7 +50,7 @@ class EmbedBuilder:
         footer_text = f"⚡ Tokens: {tot_tok} (Prompt: {p_tok} | Gen: {c_tok}) • Latency: {latency}s • Model: {model_name}"
 
         for idx, chunk in enumerate(chunks):
-            title = f"💬 Response (Part {idx+1}/{len(chunks)})" if len(chunks) > 1 else "💬 NVIDIA NIM AI Response"
+            title = f"💬 Response (Part {idx+1}/{len(chunks)})" if len(chunks) > 1 else None
             
             embed = discord.Embed(
                 title=title,
