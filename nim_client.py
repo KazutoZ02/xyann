@@ -6,41 +6,52 @@ import config
 from skills import token_tracker, ImagePromptSkill
 
 class NIMClient:
-    """Client for interacting with the AI API endpoints."""
+    """Client for interacting with various AI API endpoints."""
 
-    def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or config.NARA_API_KEY
-        self.base_url = config.NARA_BASE_URL.rstrip('/')
-        
-        if not self.api_key:
-            print("⚠️ WARNING: NARA_API_KEY is not set.")
-
-    def _get_headers(self) -> Dict[str, str]:
-        return {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+    def __init__(self):
+        # API Keys map
+        self.api_keys = {
+            "nvidia": config.NVIDIA_API_KEY,
+            "openrouter": config.OPENROUTER_API_KEY,
+            "nara": config.NARA_API_KEY
         }
+        # Check warnings
+        for provider, key in self.api_keys.items():
+            if not key:
+                print(f"⚠️ WARNING: {provider.upper()}_API_KEY is not set.")
+
+    def _get_headers(self, provider: str) -> Dict[str, str]:
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_keys.get(provider, '')}"
+        }
+        if provider == "openrouter":
+            headers["HTTP-Referer"] = "https://github.com/KazutoZ02/xyann"
+            headers["X-Title"] = "Xyann Discord AI Bot"
+        return headers
 
     async def chat_completion(
         self,
         messages: List[Dict[str, str]],
-        model_id: str = config.DEFAULT_MODEL_ID,
+        model_id: str,
+        provider: str = "nara",
         temperature: float = config.TEMPERATURE,
         max_tokens: int = config.MAX_TOKENS,
         top_p: float = config.TOP_P
     ) -> Dict[str, Any]:
         """
-        Sends a chat completion request to NVIDIA NIM API.
+        Sends a chat completion request to the correct provider.
         Returns dict with: content, prompt_tokens, completion_tokens, latency, error
         """
-        if not self.api_key:
+        api_key = self.api_keys.get(provider, "")
+        if not api_key:
             return {
-                "content": "❌ Error: `NARA_API_KEY` is not set in environment variables.",
+                "content": f"❌ Error: `{provider.upper()}_API_KEY` is not set in environment variables.",
                 "prompt_tokens": 0, "completion_tokens": 0, "latency": 0.0, "error": True
             }
 
-        url = f"{self.base_url}/chat/completions"
+        base_url = config.PROVIDERS.get(provider, config.PROVIDERS["nara"]).rstrip('/')
+        url = f"{base_url}/chat/completions"
         payload = {
             "model": model_id,
             "messages": messages,
@@ -52,7 +63,7 @@ class NIMClient:
         start_time = time.time()
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.post(url, headers=self._get_headers(), json=payload, timeout=90) as response:
+                async with session.post(url, headers=self._get_headers(provider), json=payload, timeout=90) as response:
                     latency = round(time.time() - start_time, 2)
                     if response.status != 200:
                         err_text = await response.text()

@@ -37,17 +37,15 @@ class ModelSelectView(discord.ui.View):
     def __init__(self, current_model_key: str):
         super().__init__(timeout=120)
         options = []
-        for category, models in config.MODEL_CATEGORIES.items():
-            for name in models:
-                if name in config.TEXT_MODELS:
-                    options.append(
-                        discord.SelectOption(
-                            label=name,
-                            value=name,
-                            description=category,
-                            default=(name == current_model_key)
-                        )
-                    )
+        for name, data in config.MODEL_REGISTRY.items():
+            options.append(
+                discord.SelectOption(
+                    label=name,
+                    value=name,
+                    description=data["category"],
+                    default=(name == current_model_key)
+                )
+            )
         
         select = discord.ui.Select(
             placeholder="Choose an AI Model...",
@@ -62,7 +60,6 @@ class ModelSelectView(discord.ui.View):
         selected_key = interaction.data["values"][0]
         user_models[interaction.user.id] = selected_key
         
-        model_id = config.TEXT_MODELS[selected_key]
         embed = discord.Embed(
             title="✅ AI Model Updated",
             description=f"Active model set to **{selected_key}**",
@@ -119,7 +116,9 @@ async def on_message(message: discord.Message):
 
         # Active model key & ID for user
         model_key = user_models.get(user_id, config.DEFAULT_MODEL_KEY)
-        model_id = config.TEXT_MODELS.get(model_key, config.DEFAULT_MODEL_ID)
+        model_data = config.MODEL_REGISTRY.get(model_key, config.MODEL_REGISTRY[config.DEFAULT_MODEL_KEY])
+        model_id = model_data["id"]
+        provider = model_data["provider"]
 
         # Retrieve conversation history
         history = user_histories.get(user_id, [])
@@ -136,7 +135,8 @@ async def on_message(message: discord.Message):
         async with message.channel.typing():
             res = await nim_client.chat_completion(
                 messages=messages_payload,
-                model_id=model_id
+                model_id=model_id,
+                provider=provider
             )
 
         if res["error"]:
