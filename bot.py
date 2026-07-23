@@ -93,14 +93,17 @@ async def on_message(message: discord.Message):
 
     # Check if message is a Direct Message (DM)
     is_dm = isinstance(message.channel, discord.DMChannel)
+    is_mentioned = bot.user in message.mentions
     
     # Process prefix commands first if any
     await bot.process_commands(message)
 
-    # If it's a DM and not starting with bot prefix '!', treat as AI Chat request
-    if is_dm and not message.content.startswith("!"):
+    # If it's a DM or the bot is mentioned, and not starting with bot prefix '!', treat as AI Chat request
+    if (is_dm or is_mentioned) and not message.content.startswith("!"):
         user_id = message.author.id
-        user_text = message.content.strip()
+        
+        # Remove the bot mention string from the message content
+        user_text = message.content.replace(f'<@{bot.user.id}>', '').replace(f'<@!{bot.user.id}>', '').strip()
 
         if not user_text:
             return
