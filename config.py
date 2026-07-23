@@ -27,6 +27,15 @@ TEXT_MODELS = {
     "Nemotron 3 Ultra": "nemotron-3-ultra"
 }
 
+# Categorization for UI display
+MODEL_CATEGORIES = {
+    "UI/UX Models": ["Agnes 2.0 Flash"],
+    "Frontend Models": ["Mistral Medium 3.5"],
+    "Backend Models": ["Grok 4.5"],
+    "Full Stack Models": ["Mistral Large"],
+    "Chat Models": ["GLM 5.2 Free", "Laguna S 2.1", "Nemotron 3 Ultra"]
+}
+
 DEFAULT_MODEL_KEY = "Agnes 2.0 Flash"
 DEFAULT_MODEL_ID = TEXT_MODELS[DEFAULT_MODEL_KEY]
 

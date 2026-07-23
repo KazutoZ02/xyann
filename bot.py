@@ -36,15 +36,18 @@ class ModelSelectView(discord.ui.View):
 
     def __init__(self, current_model_key: str):
         super().__init__(timeout=120)
-        options = [
-            discord.SelectOption(
-                label=name,
-                value=name,
-                description=f"Model ID: {model_id[:45]}",
-                default=(name == current_model_key)
-            )
-            for name, model_id in config.TEXT_MODELS.items()
-        ]
+        options = []
+        for category, models in config.MODEL_CATEGORIES.items():
+            for name in models:
+                if name in config.TEXT_MODELS:
+                    options.append(
+                        discord.SelectOption(
+                            label=name,
+                            value=name,
+                            description=category,
+                            default=(name == current_model_key)
+                        )
+                    )
         
         select = discord.ui.Select(
             placeholder="Choose an AI Model...",
