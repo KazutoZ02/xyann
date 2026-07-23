@@ -85,7 +85,7 @@ class NIMClient:
         except Exception as e:
             latency = round(time.time() - start_time, 2)
             return {
-                "content": f"❌ Exception during NVIDIA NIM API call:\n```{str(e)}```",
+                "content": f"❌ Exception during NVIDIA NIM API call:\n```{repr(e)}```",
                 "prompt_tokens": 0, "completion_tokens": 0, "latency": latency, "error": True
             }
 
