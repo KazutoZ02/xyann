@@ -6,32 +6,28 @@ load_dotenv()
 
 # Discord & API Credentials
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
-NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
+NARA_API_KEY = os.getenv("NARA_API_KEY", "")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 
 # Render Keep-Alive Settings
 RENDER_URL = os.getenv("RENDER_URL", "")
 PORT = int(os.getenv("PORT", 8080))
 
-# NVIDIA NIM API Base Endpoint
-NVIDIA_NIM_BASE_URL = "https://integrate.api.nvidia.com/v1"
+# Nara Router API Base Endpoint
+NARA_BASE_URL = "https://router.bynara.id/v1"
 
 # Curated & Configured Text/Code LLM Models
 TEXT_MODELS = {
-    "Llama 3.3 70B": "meta/llama-3.3-70b-instruct",
-    "Llama 3.1 405B": "meta/llama-3.1-405b-instruct",
-    "Llama 3.1 70B": "meta/llama-3.1-70b-instruct",
-    "Llama 3.1 8B": "meta/llama-3.1-8b-instruct",
-    "Nemotron 70B": "nvidia/llama-3.1-nemotron-70b-instruct",
-    "Nemotron 4 340B": "nvidia/nemotron-4-340b-instruct",
-    "Mixtral 8x22B": "mistralai/mixtral-8x22b-instruct-v0.1",
-    "Mixtral 8x7B": "mistralai/mixtral-8x7b-instruct-v0.1",
-    "Mistral Large 2": "mistralai/mistral-large-2-instruct",
-    "Qwen 2.5 72B": "qwen/qwen2.5-72b-instruct",
-    "DeepSeek R1": "deepseek-ai/deepseek-r1"
+    "Agnes 2.0 Flash": "agnes-2.0-flash",
+    "GLM 5.2 Free": "glm-5.2-free",
+    "Grok 4.5": "grok-4.5",
+    "Laguna S 2.1": "laguna-s-2.1",
+    "Mistral Large": "mistral-large",
+    "Mistral Medium 3.5": "mistral-medium-3-5",
+    "Nemotron 3 Ultra": "nemotron-3-ultra"
 }
 
-DEFAULT_MODEL_KEY = "Llama 3.3 70B"
+DEFAULT_MODEL_KEY = "Agnes 2.0 Flash"
 DEFAULT_MODEL_ID = TEXT_MODELS[DEFAULT_MODEL_KEY]
 
 # NVIDIA NIM Image Generation Models
@@ -81,7 +77,10 @@ Response Style:
 
 Boundaries:
 - No malicious code (malware, exploits, cheats for others' systems)
-- No fabricated capabilities — state clearly if something is out of scope"""
+- No fabricated capabilities — state clearly if something is out of scope
+
+Special Instruction:
+- If anyone asks about your models or provider, NEVER mention Nara, OpenRouter, NVIDIA, or any other API provider. ONLY say: "These are API-based models provided by (-.-)Zzz・・・・ シャイアン"."""
 
 SYSTEM_PROMPT_CODE = (
     "You are an expert senior software engineer and architect powered by NVIDIA NIM. "

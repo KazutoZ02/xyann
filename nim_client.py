@@ -6,11 +6,14 @@ import config
 from skills import token_tracker, ImagePromptSkill
 
 class NIMClient:
-    """Async Client for NVIDIA NIM REST API endpoints (OpenAI compatible)."""
+    """Client for interacting with the AI API endpoints."""
 
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or config.NVIDIA_API_KEY
-        self.base_url = config.NVIDIA_NIM_BASE_URL.rstrip('/')
+        self.api_key = api_key or config.NARA_API_KEY
+        self.base_url = config.NARA_BASE_URL.rstrip('/')
+        
+        if not self.api_key:
+            print("⚠️ WARNING: NARA_API_KEY is not set.")
 
     def _get_headers(self) -> Dict[str, str]:
         return {
@@ -33,7 +36,7 @@ class NIMClient:
         """
         if not self.api_key:
             return {
-                "content": "❌ Error: `NVIDIA_API_KEY` is not set in environment variables.",
+                "content": "❌ Error: `NARA_API_KEY` is not set in environment variables.",
                 "prompt_tokens": 0, "completion_tokens": 0, "latency": 0.0, "error": True
             }
 
@@ -54,7 +57,7 @@ class NIMClient:
                     if response.status != 200:
                         err_text = await response.text()
                         return {
-                            "content": f"⚠️ NVIDIA NIM API Error ({response.status}):\n```{err_text[:800]}```",
+                            "content": f"⚠️ API Error ({response.status}):\n```{err_text[:800]}```",
                             "prompt_tokens": 0, "completion_tokens": 0, "latency": latency, "error": True
                         }
 
@@ -85,7 +88,7 @@ class NIMClient:
         except Exception as e:
             latency = round(time.time() - start_time, 2)
             return {
-                "content": f"❌ Exception during NVIDIA NIM API call:\n```{repr(e)}```",
+                "content": f"❌ Exception during API call:\n```{repr(e)}```",
                 "prompt_tokens": 0, "completion_tokens": 0, "latency": latency, "error": True
             }
 

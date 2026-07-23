@@ -32,7 +32,7 @@ user_histories: Dict[int, List[Dict[str, str]]] = {}
 
 
 class ModelSelectView(discord.ui.View):
-    """Interactive Dropdown Menu View for selecting active NVIDIA NIM models."""
+    """Interactive Dropdown Menu View for selecting active AI models."""
 
     def __init__(self, current_model_key: str):
         super().__init__(timeout=120)
@@ -47,7 +47,7 @@ class ModelSelectView(discord.ui.View):
         ]
         
         select = discord.ui.Select(
-            placeholder="Choose an NVIDIA NIM Model...",
+            placeholder="Choose an AI Model...",
             min_values=1,
             max_values=1,
             options=options
@@ -61,8 +61,8 @@ class ModelSelectView(discord.ui.View):
         
         model_id = config.TEXT_MODELS[selected_key]
         embed = discord.Embed(
-            title="✅ NVIDIA NIM Model Updated",
-            description=f"Active model set to **{selected_key}**\n`{model_id}`",
+            title="✅ AI Model Updated",
+            description=f"Active model set to **{selected_key}**",
             color=0x76B900
         )
         embed.set_footer(text="All subsequent DMs will use this model.")
@@ -137,7 +137,7 @@ async def on_message(message: discord.Message):
             )
 
         if res["error"]:
-            embed = EmbedBuilder.build_error_embed("NVIDIA NIM Error", res["content"])
+            embed = EmbedBuilder.build_error_embed("API Error", res["content"])
             await message.channel.send(embed=embed)
             return
 
@@ -194,24 +194,24 @@ async def handle_dm_imagine(message: discord.Message, prompt: str):
 
 # --- SLASH COMMANDS ---
 
-@bot.tree.command(name="model", description="Switch active NVIDIA NIM AI Model (DeepSeek, Nemotron, GLM, Kimi, Gemma, etc.)")
+@bot.tree.command(name="model", description="Switch active AI Model")
 async def slash_model(interaction: discord.Interaction):
     current_key = user_models.get(interaction.user.id, config.DEFAULT_MODEL_KEY)
     view = ModelSelectView(current_model_key=current_key)
     
     embed = discord.Embed(
-        title="🎛️ Select NVIDIA NIM Model",
+        title="🎛️ Select AI Model",
         description=f"Current Active Model: **{current_key}**\nChoose a new model below:",
         color=0x76B900
     )
     await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
-@bot.tree.command(name="imagine", description="Generate high-quality AI images using NVIDIA NIM FLUX.1 / Stable Diffusion")
+@bot.tree.command(name="imagine", description="Generate high-quality AI images")
 @app_commands.describe(
     prompt="Description of the image you want to generate",
     model="Select image generation model engine",
-    enhance="Auto-enhance prompt using NVIDIA Smart Skill"
+    enhance="Auto-enhance prompt using Smart Skill"
 )
 async def slash_imagine(
     interaction: discord.Interaction,
@@ -312,14 +312,14 @@ async def slash_push_code(
 async def slash_tokens(interaction: discord.Interaction):
     stats = token_tracker.get_summary()
     embed = discord.Embed(
-        title="⚡ NVIDIA NIM Token & API Usage",
+        title="⚡ AI Token & API Usage",
         color=0x76B900
     )
     embed.add_field(name="Prompt Tokens", value=f"`{stats['prompt_tokens']:,}`", inline=True)
     embed.add_field(name="Completion Tokens", value=f"`{stats['completion_tokens']:,}`", inline=True)
     embed.add_field(name="Total Tokens Used", value=f"`{stats['total_tokens']:,}`", inline=True)
     embed.add_field(name="Total API Requests", value=f"`{stats['total_requests']:,}`", inline=True)
-    embed.set_footer(text="NVIDIA Smart Skill • Real-time Metrics")
+    embed.set_footer(text="Xyann • Real-time Metrics")
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
@@ -334,11 +334,11 @@ async def slash_clear(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
-@bot.tree.command(name="help", description="Show Bot features, available NVIDIA models, and GitHub commands")
+@bot.tree.command(name="help", description="Show Bot features, available models, and GitHub commands")
 async def slash_help(interaction: discord.Interaction):
     embed = discord.Embed(
-        title="🚀 NVIDIA NIM Discord AI Bot",
-        description="Welcome to your personal AI Assistant powered by **NVIDIA NIM API** & GitHub Integration!",
+        title="🚀 Xyann Discord AI Bot",
+        description="Welcome to your personal AI Assistant!",
         color=0x76B900
     )
     embed.add_field(
@@ -348,12 +348,12 @@ async def slash_help(interaction: discord.Interaction):
     )
     embed.add_field(
         name="🎛️ Model Switching (`/model`)",
-        value="Switch between GLM 5.2, Nemotron 3 Ultra, Kimi K2.6, DeepSeek V4 Pro/Flash, MiniMax, Gemma 4, Step, and Laguna.",
+        value="Switch between various top-tier AI models directly in chat.",
         inline=False
     )
     embed.add_field(
         name="🎨 Image Generation (`/imagine`)",
-        value="Generate photorealistic AI images using FLUX.1 Schnell or SD 3.5 with auto prompt enhancement.",
+        value="Generate photorealistic AI images with auto prompt enhancement.",
         inline=False
     )
     embed.add_field(
@@ -366,7 +366,7 @@ async def slash_help(interaction: discord.Interaction):
         value="View accumulated prompt and completion token statistics.",
         inline=False
     )
-    embed.set_footer(text="Render Free Tier 24/7 Uptime Enabled • Antigravity AI")
+    embed.set_footer(text="Render Free Tier 24/7 Uptime Enabled • Xyann AI")
     await interaction.response.send_message(embed=embed)
 
 
