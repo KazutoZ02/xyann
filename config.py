@@ -18,20 +18,11 @@ NVIDIA_NIM_BASE_URL = "https://integrate.api.nvidia.com/v1"
 
 # Curated & Configured Text/Code LLM Models
 TEXT_MODELS = {
-    "DeepSeek V4 Pro": "deepseek-ai/deepseek-r1",
-    "DeepSeek V4 Flash": "deepseek-ai/deepseek-v3",
-    "Nemotron 3 Ultra": "nvidia/llama-3.1-nemotron-70b-instruct",
-    "GLM 5.2 / GLM-4": "thudm/glm-4-9b-chat",
-    "Kimi K2.6": "moonshotai/kimi-k1.5",
-    "MiniMax M2.7 / M3": "minimax/minimax-text-01",
-    "Gemma 4 31B IT": "google/gemma-2-27b-it",
-    "Step 3.7 Flash": "stepfun-ai/step-1-8k",
-    "Laguna XS 2.1": "laguna/xs-2.1",
-    "Llama 3.3 70B (Default)": "meta/llama-3.3-70b-instruct",
-    "Qwen 2.5 Coder 32B": "qwen/qwen2.5-coder-32b-instruct"
+    "Llama 3.3 70B": "meta/llama-3.3-70b-instruct",
+    "Nemotron 70B": "nvidia/llama-3.1-nemotron-70b-instruct"
 }
 
-DEFAULT_MODEL_KEY = "DeepSeek V4 Pro"
+DEFAULT_MODEL_KEY = "Llama 3.3 70B"
 DEFAULT_MODEL_ID = TEXT_MODELS[DEFAULT_MODEL_KEY]
 
 # NVIDIA NIM Image Generation Models
