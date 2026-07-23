@@ -27,40 +27,7 @@ class TokenTracker:
 token_tracker = TokenTracker()
 
 
-class CodeSynthesisSkill:
-    """Skill to inspect AI responses, extract code blocks, and format GitHub commit payloads."""
-    
-    @staticmethod
-    def extract_code_blocks(text: str) -> List[Tuple[str, str, str]]:
-        """
-        Parses text for markdown code blocks.
-        Returns a list of tuples: (language, filename_guess, code_content)
-        """
-        # Pattern to match ```lang filename or ```lang ... ```
-        pattern = r"```([a-zA-Z0-9_+\-]*)\s*([^\n]*)\n(.*?)```"
-        matches = re.findall(pattern, text, re.DOTALL)
-        
-        extracted = []
-        for idx, (lang, header_info, content) in enumerate(matches):
-            lang = lang.strip().lower() or "text"
-            header_info = header_info.strip()
-            
-            # Check if header contains a valid filename (e.g. main.py, index.js)
-            filename = ""
-            if header_info and ("." in header_info or "/" in header_info):
-                filename = header_info.split()[0]
-            else:
-                ext_map = {
-                    "python": "py", "javascript": "js", "typescript": "ts",
-                    "html": "html", "css": "css", "json": "json", "markdown": "md",
-                    "cpp": "cpp", "c": "c", "java": "java", "go": "go", "rust": "rs", "sh": "sh"
-                }
-                ext = ext_map.get(lang, "txt")
-                filename = f"snippet_{idx+1}.{ext}"
-                
-            extracted.append((lang, filename, content.strip()))
-            
-        return extracted
+
 
 
 class ImagePromptSkill:

@@ -6,7 +6,6 @@ load_dotenv()
 
 # Discord & API Credentials
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 
 # AI Provider API Keys
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")

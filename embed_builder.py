@@ -92,36 +92,7 @@ class EmbedBuilder:
         embed.set_footer(text=f"⚡ Model: {model_name} • Latency: {latency}s • NVIDIA NIM Visual AI")
         return embed
 
-    @staticmethod
-    def build_github_repo_embed(repo_data: Dict[str, Any]) -> discord.Embed:
-        """Builds an embed for newly created GitHub repositories."""
-        embed = discord.Embed(
-            title="🚀 GitHub Repository Created Successfully!",
-            url=repo_data.get("html_url", ""),
-            color=COLOR_GITHUB_BLACK,
-            timestamp=datetime.datetime.now(datetime.timezone.utc)
-        )
-        embed.add_field(name="Repository Name", value=f"`{repo_data.get('name')}`", inline=True)
-        embed.add_field(name="Full Name", value=f"`{repo_data.get('full_name')}`", inline=True)
-        embed.add_field(name="Visibility", value="🔒 Private" if repo_data.get("private") else "🌐 Public", inline=True)
-        embed.add_field(name="Clone URL", value=f"```{repo_data.get('clone_url')}```", inline=False)
-        embed.set_footer(text="GitHub Integration • Antigravity Discord AI Bot")
-        return embed
 
-    @staticmethod
-    def build_github_commit_embed(commit_data: Dict[str, Any]) -> discord.Embed:
-        """Builds an embed for code pushed to GitHub."""
-        embed = discord.Embed(
-            title=f"📦 Code File {commit_data.get('action', 'pushed').title()} on GitHub!",
-            url=commit_data.get("file_url", ""),
-            color=COLOR_GITHUB_BLACK,
-            timestamp=datetime.datetime.now(datetime.timezone.utc)
-        )
-        embed.add_field(name="File Path", value=f"`{commit_data.get('file_path')}`", inline=True)
-        embed.add_field(name="Commit SHA", value=f"`{commit_data.get('commit_sha')}`", inline=True)
-        embed.add_field(name="Repo Link", value=f"[View Repository]({commit_data.get('repo_url')})", inline=True)
-        embed.set_footer(text="GitHub Commit Skill • Antigravity Discord AI Bot")
-        return embed
 
     @staticmethod
     def build_error_embed(title: str, description: str) -> discord.Embed:

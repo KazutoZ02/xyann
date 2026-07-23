@@ -8,9 +8,8 @@ from typing import Dict, List, Optional
 
 import config
 from nim_client import NIMClient
-from github_client import GitHubClient
 from embed_builder import EmbedBuilder
-from skills import token_tracker, CodeSynthesisSkill
+from skills import token_tracker
 from web_server import start_web_server, auto_ping_task
 
 # Initialize Discord Bot with intents
@@ -21,7 +20,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 # Clients
 nim_client = NIMClient()
-gh_client = GitHubClient()
 
 # In-memory storage for user states
 # user_id -> selected_model_key
@@ -256,61 +254,6 @@ async def slash_imagine(
         await interaction.followup.send(embed=embed)
 
 
-@bot.tree.command(name="create_repo", description="Create a new GitHub Repository directly from Discord")
-@app_commands.describe(
-    name="Repository name (e.g. my-awesome-project)",
-    description="Short description for the repository",
-    private="Set to True for a private repository, False for public"
-)
-async def slash_create_repo(
-    interaction: discord.Interaction,
-    name: str,
-    description: Optional[str] = "Created via Antigravity Discord AI Bot",
-    private: Optional[bool] = False
-):
-    await interaction.response.defer()
-    res = await gh_client.create_repository(name=name, description=description or "", private=private or False)
-
-    if not res["success"]:
-        embed = EmbedBuilder.build_error_embed("GitHub Creation Failed", res["error"])
-        await interaction.followup.send(embed=embed)
-        return
-
-    embed = EmbedBuilder.build_github_repo_embed(res["repo"])
-    await interaction.followup.send(embed=embed)
-
-
-@bot.tree.command(name="push_code", description="Commit and push code snippets directly to a GitHub Repository")
-@app_commands.describe(
-    repo_name="Target repository (e.g. 'username/repo-name' or 'repo-name')",
-    file_path="Destination path in repository (e.g. 'src/main.py')",
-    code="The source code content to commit",
-    commit_message="Commit message description"
-)
-async def slash_push_code(
-    interaction: discord.Interaction,
-    repo_name: str,
-    file_path: str,
-    code: str,
-    commit_message: Optional[str] = "Add code via Antigravity Discord AI Bot"
-):
-    await interaction.response.defer()
-    res = await gh_client.push_code_file(
-        repo_name=repo_name,
-        file_path=file_path,
-        content=code,
-        commit_message=commit_message or "Commit code via Discord AI"
-    )
-
-    if not res["success"]:
-        embed = EmbedBuilder.build_error_embed("GitHub Push Failed", res["error"])
-        await interaction.followup.send(embed=embed)
-        return
-
-    embed = EmbedBuilder.build_github_commit_embed(res["details"])
-    await interaction.followup.send(embed=embed)
-
-
 @bot.tree.command(name="tokens", description="View session token consumption and API request metrics")
 async def slash_tokens(interaction: discord.Interaction):
     stats = token_tracker.get_summary()
@@ -359,11 +302,7 @@ async def slash_help(interaction: discord.Interaction):
         value="Generate photorealistic AI images with auto prompt enhancement.",
         inline=False
     )
-    embed.add_field(
-        name="🐙 GitHub Tools (`/create_repo`, `/push_code`)",
-        value="Create public/private GitHub repositories & push generated code directly from Discord.",
-        inline=False
-    )
+
     embed.add_field(
         name="⚡ Token Tracker (`/tokens`)",
         value="View accumulated prompt and completion token statistics.",
