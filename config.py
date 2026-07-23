@@ -30,28 +30,30 @@ MODEL_REGISTRY = {
     "Gemma 4 26B (Vision)": {"provider": "openrouter", "id": "google/gemma-4-26b-a4b-it:free", "category": "UI/UX Models"},
     
     # Frontend Models
+    "North Mini Code": {"provider": "openrouter", "id": "cohere/north-mini-code:free", "category": "Frontend Models"},
     "Mistral Medium 3.5": {"provider": "nara", "id": "mistral-medium-3-5", "category": "Frontend Models"},
     "Gemma 4 31B": {"provider": "openrouter", "id": "google/gemma-4-31b-it:free", "category": "Frontend Models"},
     
     # Backend Models
-    "Grok 4.5": {"provider": "nara", "id": "grok-4.5", "category": "Backend Models"},
+    "Laguna S 2.1": {"provider": "nara", "id": "laguna-s-2.1", "category": "Backend Models"},
+    "Laguna M.1": {"provider": "openrouter", "id": "poolside/laguna-m.1:free", "category": "Backend Models"},
+    "Laguna XS 2.1": {"provider": "openrouter", "id": "poolside/laguna-xs-2.1:free", "category": "Backend Models"},
     "GPT-OSS 20B": {"provider": "openrouter", "id": "openai/gpt-oss-20b:free", "category": "Backend Models"},
-    "North Mini Code": {"provider": "openrouter", "id": "cohere/north-mini-code:free", "category": "Backend Models"},
     
     # Full Stack Models
+    "Nemotron 3 Ultra": {"provider": "nara", "id": "nemotron-3-ultra", "category": "Full Stack Models"},
+    "Nemotron 3 Super": {"provider": "openrouter", "id": "nvidia/nemotron-3-super-120b-a12b:free", "category": "Full Stack Models"},
     "Mistral Large": {"provider": "nara", "id": "mistral-large", "category": "Full Stack Models"},
-    "GLM 5.2 Free": {"provider": "nara", "id": "glm-5.2-free", "category": "Full Stack Models"},
-    "Llama 3.3 70B": {"provider": "nvidia", "id": "meta/llama-3.3-70b-instruct", "category": "Full Stack Models"},
     "Qwen 2.5 72B": {"provider": "nvidia", "id": "qwen/qwen2.5-72b-instruct", "category": "Full Stack Models"},
+    "Llama 3.3 70B": {"provider": "nvidia", "id": "meta/llama-3.3-70b-instruct", "category": "Full Stack Models"},
+    "GLM 5.2 Free": {"provider": "nara", "id": "glm-5.2-free", "category": "Full Stack Models"},
+    "Grok 4.5": {"provider": "nara", "id": "grok-4.5", "category": "Full Stack Models"},
+    
+    # Image Models
+    "Nemotron Nano 12B VL": {"provider": "openrouter", "id": "nvidia/nemotron-nano-12b-v2-vl:free", "category": "Image Models"},
+    "Nemotron 3 Nano Omni": {"provider": "openrouter", "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", "category": "Image Models"},
     
     # Chat Models
-    "Laguna S 2.1": {"provider": "nara", "id": "laguna-s-2.1", "category": "Chat Models"},
-    "Laguna M.1": {"provider": "openrouter", "id": "poolside/laguna-m.1:free", "category": "Chat Models"},
-    "Laguna XS 2.1": {"provider": "openrouter", "id": "poolside/laguna-xs-2.1:free", "category": "Chat Models"},
-    "Nemotron 3 Ultra": {"provider": "nara", "id": "nemotron-3-ultra", "category": "Chat Models"},
-    "Nemotron 3 Super": {"provider": "openrouter", "id": "nvidia/nemotron-3-super-120b-a12b:free", "category": "Chat Models"},
-    "Nemotron 3 Nano Omni": {"provider": "openrouter", "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", "category": "Chat Models"},
-    "Nemotron Nano 12B VL": {"provider": "openrouter", "id": "nvidia/nemotron-nano-12b-v2-vl:free", "category": "Chat Models"},
     "Nemotron Content Safety": {"provider": "openrouter", "id": "nvidia/nemotron-3.5-content-safety:free", "category": "Chat Models"}
 }
 
