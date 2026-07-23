@@ -16,7 +16,6 @@ from web_server import start_web_server, auto_ping_task
 # Initialize Discord Bot with intents
 intents = discord.Intents.default()
 intents.message_content = True
-intents.direct_messages = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
