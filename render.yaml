@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: nvidia-nim-discord-bot
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: RENDER_URL
+        sync: false
+      - key: PORT
+        value: 8080
