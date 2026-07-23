@@ -19,7 +19,16 @@ NVIDIA_NIM_BASE_URL = "https://integrate.api.nvidia.com/v1"
 # Curated & Configured Text/Code LLM Models
 TEXT_MODELS = {
     "Llama 3.3 70B": "meta/llama-3.3-70b-instruct",
-    "Nemotron 70B": "nvidia/llama-3.1-nemotron-70b-instruct"
+    "Llama 3.1 405B": "meta/llama-3.1-405b-instruct",
+    "Llama 3.1 70B": "meta/llama-3.1-70b-instruct",
+    "Llama 3.1 8B": "meta/llama-3.1-8b-instruct",
+    "Nemotron 70B": "nvidia/llama-3.1-nemotron-70b-instruct",
+    "Nemotron 4 340B": "nvidia/nemotron-4-340b-instruct",
+    "Mixtral 8x22B": "mistralai/mixtral-8x22b-instruct-v0.1",
+    "Mixtral 8x7B": "mistralai/mixtral-8x7b-instruct-v0.1",
+    "Mistral Large 2": "mistralai/mistral-large-2-instruct",
+    "Qwen 2.5 72B": "qwen/qwen2.5-72b-instruct",
+    "DeepSeek R1": "deepseek-ai/deepseek-r1"
 }
 
 DEFAULT_MODEL_KEY = "Llama 3.3 70B"
